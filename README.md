@@ -84,13 +84,28 @@ $ npx husky add .husky/pre-commit "npm test"
 $ git add .husky/pre-commit
 $ git commit -m "Keep calm and commit"
 
-# e2e tests
+# Lint Staged
 $ npm install --save-dev lint-staged
 
-$ {
-$  "lint-staged": {
-$    "*": "your-cmd"
-$  }
+$ "scripts": {
+$    "prepare": "husky install",
+$    "prettier": "prettier --write --ignore-unknown src",
+$    "pre-commit": "lint-staged"
+$    "build": "nest build",
 $ }
+
+$ "husky": {
+$    "hooks": {
+$      "pre-commit": "lint-staged"
+$    }
+$  },
+ 
+$  "lint-staged": {
+$    "*.ts": [
+$      "npm run lint",
+$      "npm run prettier",
+$      "git add"
+$    ]
+$  }
 
 ```
